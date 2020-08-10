@@ -58,6 +58,7 @@ class Connection:
                    protocol=None,
                    transport_factory=None,
                    ssl_context=None,
+                   headers=None,
                    username='',
                    password='',
                    max_inflight=64,
@@ -73,6 +74,7 @@ class Connection:
             Protocol implementation
         :param transport_factory: Factory function for transports
         :param ssl.SSLContext ssl_context:
+        :param dict(str, str) headers:
         :param str username: Username for database auth
         :param str password: Password for database auth
 
@@ -89,7 +91,7 @@ class Connection:
         if not transport_factory:
             transport_factory = lambda: AiohttpTransport(loop)
         transport = transport_factory()
-        await transport.connect(url, ssl_context=ssl_context)
+        await transport.connect(url, ssl_context=ssl_context, headers=headers)
         return cls(url, transport, protocol, loop, username, password,
                    max_inflight, response_timeout, message_serializer,
                    provider)

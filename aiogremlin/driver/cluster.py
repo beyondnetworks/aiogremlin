@@ -45,6 +45,7 @@ class Cluster:
         'ssl_certfile': '',
         'ssl_keyfile': '',
         'ssl_password': '',
+        'headers': None,
         'username': '',
         'password': '',
         'response_timeout': None,

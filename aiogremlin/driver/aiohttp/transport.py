@@ -10,13 +10,13 @@ class AiohttpTransport(transport.AbstractBaseTransport):
         self._loop = loop
         self._connected = False
 
-    async def connect(self, url, *, ssl_context=None):
+    async def connect(self, url, *, ssl_context=None, headers=None):
         await self.close()
         connector = aiohttp.TCPConnector(
             ssl_context=ssl_context, loop=self._loop)
         self._client_session = aiohttp.ClientSession(
             loop=self._loop, connector=connector)
-        self._ws = await self._client_session.ws_connect(url)
+        self._ws = await self._client_session.ws_connect(url, headers=headers)
         self._connected = True
 
     async def write(self, message):

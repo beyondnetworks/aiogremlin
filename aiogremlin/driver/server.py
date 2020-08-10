@@ -35,6 +35,7 @@ class GremlinServer:
             self._ssl_context = ssl_context
         else:
             self._ssl_context = None
+        self._headers = config['headers']
 
     @property
     def url(self):
@@ -66,8 +67,8 @@ class GremlinServer:
 
     async def initialize(self):
         conn_pool = pool.ConnectionPool(
-            self._url, self._loop, self._ssl_context, self._username,
-            self._password, self._max_conns, self._min_conns,
+            self._url, self._loop, self._ssl_context, self._headers,
+            self._username, self._password, self._max_conns, self._min_conns,
             self._max_times_acquired, self._max_inflight,
             self._response_timeout, self._message_serializer, self._provider)
         await conn_pool.init_pool()

@@ -92,12 +92,13 @@ class ConnectionPool:
         one time on the connection
     """
 
-    def __init__(self, url, loop, ssl_context, username, password, max_conns,
+    def __init__(self, url, loop, ssl_context, headers, username, password, max_conns,
                  min_conns, max_times_acquired, max_inflight, response_timeout,
                  message_serializer, provider):
         self._url = url
         self._loop = loop
         self._ssl_context = ssl_context
+        self._headers = headers
         self._username = username
         self._password = password
         self._max_conns = max_conns
@@ -194,7 +195,7 @@ class ConnectionPool:
     async def _get_connection(self, username, password, max_inflight,
                               response_timeout, message_serializer, provider):
         conn = await connection.Connection.open(
-            self._url, self._loop, ssl_context=self._ssl_context,
+            self._url, self._loop, ssl_context=self._ssl_context, headers=self._headers,
             username=username, password=password,
             response_timeout=response_timeout,
             message_serializer=message_serializer, provider=provider)

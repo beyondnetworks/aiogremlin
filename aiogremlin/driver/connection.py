@@ -74,6 +74,7 @@ class Connection:
             Protocol implementation
         :param transport_factory: Factory function for transports
         :param ssl.SSLContext ssl_context:
+        :param dict(str, str) headers:
         :param str username: Username for database auth
         :param str password: Password for database auth
 

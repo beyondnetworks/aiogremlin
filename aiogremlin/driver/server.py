@@ -82,6 +82,7 @@ class GremlinServer:
         :param str url: url for host Gremlin Server
         :param asyncio.BaseEventLoop loop:
         :param ssl.SSLContext ssl_context:
+        :param dict(str, str) headers:
         :param str username: Username for database auth
         :param str password: Password for database auth
         :param float response_timeout: (optional) `None` by default

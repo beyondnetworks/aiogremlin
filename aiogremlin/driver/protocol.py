@@ -42,8 +42,7 @@ class GremlinServerWSProtocol(protocol.AbstractBaseProtocol):
             await func
 
     async def data_received(self, data, results_dict):
-        data = data.decode('utf-8')
-        message = self._message_serializer.deserialize_message(json.loads(data))
+        message = self._message_serializer.deserialize_message(data)
         request_id = message['requestId']
         status_code = message['status']['code']
         data = message['result']['data']
@@ -65,7 +64,6 @@ class GremlinServerWSProtocol(protocol.AbstractBaseProtocol):
             else:
                 if data:
                     for result in data:
-                        result = self._message_serializer.deserialize_message(result)
                         message = Message(status_code, result, msg)
                         result_set.queue_result(message)
                 else:
